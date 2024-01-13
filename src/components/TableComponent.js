@@ -13,7 +13,7 @@ const TableComponent = () => {
             cryptoData?<table className='w-full table-auto'>
             <thead className='capitalize text-base text-gray-100 font-medium border-b border-gray-100'>
                 <tr>
-                    <th className='py-1'>asset</th>
+                    <th className='py-1'>Asset</th>
                     <th className='py-1'>name</th>
                     <th className='py-1'>price</th>
                     <th className='py-1'>total volume</th>
