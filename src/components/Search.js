@@ -5,7 +5,7 @@ import debounce from "lodash.debounce";
 
 const SearchInput = ({ handleSearch }) => {
   const [searchText, setSearchText] = useState("");
-  let { searchData } = useContext(CryptoContext);
+  let { searchData,setCoinSearch,setSearchData } = useContext(CryptoContext);
 
   let handleInput = (e) => {
     e.preventDefault();
@@ -14,16 +14,16 @@ const SearchInput = ({ handleSearch }) => {
     handleSearch(query);
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   handleSearch(searchText);
-  // };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSearch(searchText);
+  };
 
-  // const selectCoin = (coin) => {
-  //   setCoinSearch(coin);
-  //   setSearchText("");
-  //   setSearchData();
-  // };
+  const selectCoin = (coin) => {
+    setCoinSearch(coin);
+    setSearchText("");
+    setSearchData();
+  };
 
   return (
     <>
@@ -31,7 +31,7 @@ const SearchInput = ({ handleSearch }) => {
         className="w-96 relative flex items-center
     ml-7 font-nunito
     "
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <input
           type="text"
@@ -51,15 +51,42 @@ const SearchInput = ({ handleSearch }) => {
       </form>
       {searchText.length > 0 ? (
         <ul
-          className="absolute top-11 right-0 py-2 w-full h-96 rounded overflow-x-hidden
-      bg-gray-200 bg-opacity-60 backdrop-blur-md"
+          className="absolute top-11 right-0 w-96 h-96 rounded
+overflow-x-hidden py-2 bg-gray-200 bg-opacity-60 
+backdrop-blur-md scrollbar-thin scrollbar-thumb-gray-100 scrollbar-track-gray-200
+"
         >
           {searchData ? (
             searchData.map((coin) => {
-              return <li>{coin.id}</li>;
+              return (
+                <li
+                  className="flex items-center ml-4 my-2 cursor-pointer"
+                  key={coin.id}
+                  onClick={() => selectCoin(coin.id)}
+                >
+                  <img
+                    className="w-[1rem] h-[1rem] mx-1.5"
+                    src={coin.thumb}
+                    alt={coin.name}
+                  />
+
+                  <span>{coin.name}</span>
+                </li>
+              );
             })
           ) : (
-            <h2>Please wait...</h2>
+            <div
+              className="w-full h-full flex justify-center items-center
+             "
+            >
+              <div
+                className="w-8 h-8 border-4 border-cyan rounded-full
+             border-b-gray-200 animate-spin
+             "
+                role="status"
+              />
+              <span className="ml-2">Searching...</span>
+            </div>
           )}
         </ul>
       ) : null}
