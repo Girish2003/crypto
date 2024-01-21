@@ -10,6 +10,9 @@ const Crypto = () => {
       <TableComponent />
       {/* <Outlet /> */}
     </section>
+
+
+    
   );
 };
 
